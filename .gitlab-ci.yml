@@ -1,0 +1,37 @@
+stages:
+  - lint
+  - test
+  - build
+
+default:
+  image: python:3.12-slim
+  before_script:
+    - pip install -r requirements-dev.txt
+
+lint:
+  stage: lint
+  script:
+    - flake8 src tests
+
+test:
+  stage: test
+  script:
+    - pip install -e .
+    - pytest -v --junitxml=report.xml
+  artifacts:
+    when: always
+    paths:
+      - report.xml
+    reports:
+      junit: report.xml
+
+build:
+  stage: build
+  script:
+    - pip install build
+    - python -m build
+    - pip install dist/*.whl
+    - calc add 2 3
+  artifacts:
+    paths:
+      - dist/
