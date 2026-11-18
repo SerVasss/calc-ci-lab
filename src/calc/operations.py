@@ -34,3 +34,10 @@ def power(base: float, exponent: int) -> float:
     for _ in range(abs(exponent)):
         result *= base
     return result if exponent >= 0 else 1 / result
+
+
+def celsius_to_fahrenheit(c: float) -> float:
+    """Переводит температуру из Цельсия в Фаренгейты."""
+    if isinstance(c, bool) or not isinstance(c, (int, float)):
+        raise TypeError("Температура должна быть числом")
+    return c * 9 / 5 + 32
